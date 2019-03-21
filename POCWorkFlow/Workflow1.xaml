@@ -1,0 +1,193 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="POCWorkFlow.Workflow1" sap2010:ExpressionActivityEditor.ExpressionActivityEditor="C#" sap2010:WorkflowViewState.IdRef="POCWorkFlow.Workflow1_1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:local="clr-namespace:POCWorkFlow"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>POCWorkFlow</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>POCWorkFlow</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="FilePath" />
+      <Variable x:TypeArguments="x:String" Name="FileName" />
+      <Variable x:TypeArguments="local:ResultInfo" Name="Result" />
+      <Variable x:TypeArguments="x:String" Name="FileTemplate" />
+      <Variable x:TypeArguments="local:ResultInfo" Name="ResultReadReplace" />
+    </Sequence.Variables>
+    <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="Please input path for file:" />
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">FilePath</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">Console.ReadLine()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="Please input file name:" />
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">
+          <mca:CSharpReference x:TypeArguments="x:String">FileName</mca:CSharpReference>
+        </OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">Console.ReadLine()</mca:CSharpValue>
+        </InArgument>
+      </Assign.Value>
+    </Assign>
+    <local:CreateFileFolderActivity sap2010:WorkflowViewState.IdRef="CreateFileFolderActivity1_1">
+      <local:CreateFileFolderActivity.FileName>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">FileName</mca:CSharpValue>
+        </InArgument>
+      </local:CreateFileFolderActivity.FileName>
+      <local:CreateFileFolderActivity.FilePathName>
+        <InArgument x:TypeArguments="x:String">
+          <mca:CSharpValue x:TypeArguments="x:String">FilePath</mca:CSharpValue>
+        </InArgument>
+      </local:CreateFileFolderActivity.FilePathName>
+      <local:CreateFileFolderActivity.Result>
+        <OutArgument x:TypeArguments="local:ResultInfo">
+          <mca:CSharpReference x:TypeArguments="local:ResultInfo">Result</mca:CSharpReference>
+        </OutArgument>
+      </local:CreateFileFolderActivity.Result>
+    </local:CreateFileFolderActivity>
+    <If sap2010:WorkflowViewState.IdRef="If_1">
+      <If.Condition>
+        <InArgument x:TypeArguments="x:Boolean">
+          <mca:CSharpValue x:TypeArguments="x:Boolean">Result.IsValid == false</mca:CSharpValue>
+        </InArgument>
+      </If.Condition>
+      <If.Then>
+        <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_3">
+          <InArgument x:TypeArguments="x:String">
+            <mca:CSharpValue x:TypeArguments="x:String">Result.Message</mca:CSharpValue>
+          </InArgument>
+        </WriteLine>
+      </If.Then>
+      <If.Else>
+        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="Please input file template:" />
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">
+                <mca:CSharpReference x:TypeArguments="x:String">FileTemplate</mca:CSharpReference>
+              </OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">Console.ReadLine()</mca:CSharpValue>
+              </InArgument>
+            </Assign.Value>
+          </Assign>
+          <local:ReadTemplateFileActivity DisplayName="ReadAndReplaceTemplateFileActivity" sap2010:WorkflowViewState.IdRef="ReadTemplateFileActivity_1">
+            <local:ReadTemplateFileActivity.FileName>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">$"{FilePath}\\{FileName}"</mca:CSharpValue>
+              </InArgument>
+            </local:ReadTemplateFileActivity.FileName>
+            <local:ReadTemplateFileActivity.FileTemplate>
+              <InArgument x:TypeArguments="x:String">
+                <mca:CSharpValue x:TypeArguments="x:String">FileTemplate</mca:CSharpValue>
+              </InArgument>
+            </local:ReadTemplateFileActivity.FileTemplate>
+            <local:ReadTemplateFileActivity.Result>
+              <OutArgument x:TypeArguments="local:ResultInfo">
+                <mca:CSharpReference x:TypeArguments="local:ResultInfo">ResultReadReplace</mca:CSharpReference>
+              </OutArgument>
+            </local:ReadTemplateFileActivity.Result>
+          </local:ReadTemplateFileActivity>
+          <If sap2010:WorkflowViewState.IdRef="If_2">
+            <If.Condition>
+              <InArgument x:TypeArguments="x:Boolean">
+                <mca:CSharpValue x:TypeArguments="x:Boolean">ResultReadReplace.IsValid</mca:CSharpValue>
+              </InArgument>
+            </If.Condition>
+            <If.Then>
+              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_5">
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">"This is message template : '" + ResultReadReplace.Message + "'"</mca:CSharpValue>
+                </InArgument>
+              </WriteLine>
+            </If.Then>
+            <If.Else>
+              <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_6">
+                <InArgument x:TypeArguments="x:String">
+                  <mca:CSharpValue x:TypeArguments="x:String">ResultReadReplace.Message</mca:CSharpValue>
+                </InArgument>
+              </WriteLine>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+    <sads:DebugSymbol.Symbol>d0dDOlxVc2Vyc1xQQ01JV1MxMVxzb3VyY2VccmVwb3NcSGVsbG9Xb3JrRmxvd1xQT0NXb3JrRmxvd1xXb3JrZmxvdzEueGFtbCMnA6ABDgIBAS8FL2MCAXcwBTsOAgFqPAU8XwIBaD0FSA4CAVtJBVkmAgFIWgWeAQoCAQIvQy9gAgF4OAs4WwIBcTMLM1kCAWs8QzxcAgFpRQtFWwIBYkALQFkCAVxRC1FRAgFVTAtMUQIBT1YLVl8CAUldC11hAgEDYQllFQIBQWgJnAEUAgEJYw1jWQIBQmkLaWkCAT9qC3UUAgEydguGASwCAR+HAQubARACAQppSWlmAgFAchFyYQIBOW0RbWMCATN5EXloAgEsgwERgwFwAgEmfhF+WwIBIIoBEYoBaQIBC44BD5IBGwIBGJUBD5kBGwIBEZABE5ABkQECARmXAROXAWoCARI=</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="721,62" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="721,62" />
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="721,62" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="721,62" />
+      <sap2010:ViewStateData Id="CreateFileFolderActivity1_1" sap:VirtualizedContainerService.HintSize="721,22" />
+      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="464,62" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="464,62" />
+      <sap2010:ViewStateData Id="ReadTemplateFileActivity_1" sap:VirtualizedContainerService.HintSize="464,22" />
+      <sap2010:ViewStateData Id="WriteLine_5" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="WriteLine_6" sap:VirtualizedContainerService.HintSize="210,62" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="464,212" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="486,602">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="721,752" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="743,1346">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="POCWorkFlow.Workflow1_1" sap:VirtualizedContainerService.HintSize="783,1426" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
